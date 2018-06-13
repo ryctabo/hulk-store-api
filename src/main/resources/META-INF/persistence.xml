@@ -29,6 +29,10 @@
                                  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
     <persistence-unit name="hulk-pu" transaction-type="RESOURCE_LOCAL">
+        <class>com.ryctabo.hulkstore.database.entity.Category</class>
+        <class>com.ryctabo.hulkstore.database.entity.Product</class>
+        <class>com.ryctabo.hulkstore.database.entity.Stock</class>
+
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:hulk-database"/>
