@@ -27,6 +27,7 @@ package com.ryctabo.hulkstore.database.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -60,6 +61,10 @@ public class Product implements Serializable {
 
     @Column(name = "UPDATED", insertable = false)
     private LocalDateTime updated;
+
+    public Product() {
+        this.stocks = new HashSet<>();
+    }
 
     public long getId() {
         return id;
