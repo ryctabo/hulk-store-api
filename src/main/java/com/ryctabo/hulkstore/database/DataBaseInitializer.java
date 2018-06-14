@@ -67,9 +67,9 @@ public class DataBaseInitializer {
      */
     @PostConstruct
     public void setUp() {
-        LOG.debug("Initializing the main data in the database...");
+        LOG.info("Initializing the main data in the database...");
         this.createDefaultCategories();
-        LOG.debug("The main data of the database has been created.");
+        LOG.info("The main data of the database has been created.");
     }
 
     /**
