@@ -33,7 +33,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class ConfigApp extends ResourceConfig {
 
     public ConfigApp() {
-        packages("com.ryctabo.hulkstore.rest.resources");
+        packages("com.ryctabo.hulkstore.rest");
     }
 
 }

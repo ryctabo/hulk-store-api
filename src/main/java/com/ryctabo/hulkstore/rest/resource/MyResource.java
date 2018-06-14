@@ -24,6 +24,10 @@
 
 package com.ryctabo.hulkstore.rest.resource;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.WebApplicationContext;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -35,7 +39,9 @@ import javax.ws.rs.core.MediaType;
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
+@Controller
 @Path("myresource")
+@Scope(WebApplicationContext.SCOPE_REQUEST)
 public class MyResource {
 
     /**
