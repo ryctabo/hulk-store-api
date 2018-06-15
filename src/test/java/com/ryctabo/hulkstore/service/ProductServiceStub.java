@@ -22,38 +22,40 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.database.repository;
+package com.ryctabo.hulkstore.service;
 
-import com.ryctabo.hulkstore.database.entity.Category;
-import com.ryctabo.hulkstore.generator.CategoryGenerator;
+import com.ryctabo.hulkstore.core.domain.ListResponse;
+import com.ryctabo.hulkstore.core.domain.ProductData;
+import com.ryctabo.hulkstore.core.share.OrderType;
+import com.ryctabo.hulkstore.generator.ProductGenerator;
 
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-public class CategoryRepositoryStub implements CategoryDao {
+public class ProductServiceStub implements ProductService {
 
     @Override
-    public List<Category> find() {
-        return Collections.emptyList();
+    public ListResponse<ProductData> get(String search, Long categoryId, String orderBy,
+                                         OrderType orderType, int start, int size) {
+        return new ListResponse<>(Collections.emptyList(), 0L);
     }
 
     @Override
-    public Category find(Long id) {
-        return CategoryGenerator.getEntity();
+    public ProductData get(Long id) {
+        return ProductGenerator.getData();
     }
 
     @Override
-    public Category save(Category entity) {
-        return entity;
+    public ProductData add(ProductData data) {
+        return data;
     }
 
     @Override
-    public Category delete(Long id) {
-        return CategoryGenerator.getEntity();
+    public ProductData update(Long id, ProductData data) {
+        return data;
     }
 
 }

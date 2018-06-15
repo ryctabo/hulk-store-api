@@ -24,8 +24,9 @@
 
 package com.ryctabo.hulkstore.database.repository;
 
-import com.ryctabo.hulkstore.database.entity.Category;
-import com.ryctabo.hulkstore.generator.CategoryGenerator;
+import com.ryctabo.hulkstore.core.share.OrderType;
+import com.ryctabo.hulkstore.database.entity.Product;
+import com.ryctabo.hulkstore.generator.ProductGenerator;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,26 +35,37 @@ import java.util.List;
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-public class CategoryRepositoryStub implements CategoryDao {
+public class ProductRepositoryStub implements ProductDao {
 
     @Override
-    public List<Category> find() {
+    public List<Product> find(String search, Long categoryId, String orderBy,
+                              OrderType orderType, int start, int size) {
         return Collections.emptyList();
     }
 
     @Override
-    public Category find(Long id) {
-        return CategoryGenerator.getEntity();
+    public long count(String search, Long categoryId) {
+        return 0L;
     }
 
     @Override
-    public Category save(Category entity) {
+    public List<Product> find() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Product find(Long id) {
+        return ProductGenerator.getEntity();
+    }
+
+    @Override
+    public Product save(Product entity) {
         return entity;
     }
 
     @Override
-    public Category delete(Long id) {
-        return CategoryGenerator.getEntity();
+    public Product delete(Long id) {
+        return ProductGenerator.getEntity();
     }
 
 }

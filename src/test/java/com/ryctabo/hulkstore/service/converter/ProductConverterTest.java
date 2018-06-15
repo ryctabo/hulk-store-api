@@ -24,39 +24,51 @@
 
 package com.ryctabo.hulkstore.service.converter;
 
-import com.ryctabo.hulkstore.core.domain.CategoryData;
-import com.ryctabo.hulkstore.database.entity.Category;
+import com.ryctabo.hulkstore.core.domain.ProductData;
+import com.ryctabo.hulkstore.database.entity.Product;
 import com.ryctabo.hulkstore.generator.CategoryGenerator;
+import com.ryctabo.hulkstore.generator.ProductGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-public class CategoryConverterTest {
+public class ProductConverterTest {
 
-    private static CategoryConverter converter;
+    private static ProductConverter converter;
 
     @BeforeClass
     public static void setUp() {
-        converter = new CategoryConverter();
+        CategoryConverter categoryConverter = mock(CategoryConverter.class);
+
+        when(categoryConverter.convertToDto(any()))
+                .thenReturn(CategoryGenerator.getData());
+
+        when(categoryConverter.convertToEntity(any()))
+                .thenReturn(CategoryGenerator.getEntity());
+
+        converter = new ProductConverter(categoryConverter);
     }
 
     @Test
     public void testConvertToEntity() {
-        CategoryData category = CategoryGenerator.getData();
-        Category entity = converter.convertToEntity(category);
-        assertEquals(category.getName(), entity.getName());
+        ProductData Product = ProductGenerator.getData();
+        Product entity = converter.convertToEntity(Product);
+        assertEquals(Product.getName(), entity.getName());
     }
 
     @Test
     public void testConvertToData() {
-        Category category = CategoryGenerator.getEntity();
-        CategoryData data = converter.convertToDto(category);
-        assertEquals(category.getName(), data.getName());
+        Product Product = ProductGenerator.getEntity();
+        ProductData data = converter.convertToDto(Product);
+        assertEquals(Product.getName(), data.getName());
     }
 
 }

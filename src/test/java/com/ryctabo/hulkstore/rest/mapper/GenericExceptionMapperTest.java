@@ -22,38 +22,27 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.database.repository;
+package com.ryctabo.hulkstore.rest.mapper;
 
-import com.ryctabo.hulkstore.database.entity.Category;
-import com.ryctabo.hulkstore.generator.CategoryGenerator;
+import org.junit.Test;
 
-import java.util.Collections;
-import java.util.List;
+import javax.ws.rs.core.Response;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-public class CategoryRepositoryStub implements CategoryDao {
+public class GenericExceptionMapperTest {
 
-    @Override
-    public List<Category> find() {
-        return Collections.emptyList();
-    }
+    @Test
+    public void testToResponse() {
+        GenericExceptionMapper mapper = new GenericExceptionMapper();
+        Response response = mapper.toResponse(new Exception());
 
-    @Override
-    public Category find(Long id) {
-        return CategoryGenerator.getEntity();
-    }
-
-    @Override
-    public Category save(Category entity) {
-        return entity;
-    }
-
-    @Override
-    public Category delete(Long id) {
-        return CategoryGenerator.getEntity();
+        assertNotNull(response);
+        assertEquals(500, response.getStatus());
     }
 
 }

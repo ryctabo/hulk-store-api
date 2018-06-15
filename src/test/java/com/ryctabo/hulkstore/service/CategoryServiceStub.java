@@ -43,7 +43,7 @@ public class CategoryServiceStub implements CategoryService {
 
     @Override
     public CategoryData get(Long id) {
-        return CategoryGenerator.getCategoryData();
+        return CategoryGenerator.getData();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CategoryServiceStub implements CategoryService {
 
     @Override
     public CategoryData delete(Long id) {
-        return CategoryGenerator.getCategoryData();
+        return CategoryGenerator.getData();
     }
 
 }

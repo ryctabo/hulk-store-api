@@ -33,14 +33,14 @@ import com.ryctabo.hulkstore.database.entity.Category;
  */
 public class CategoryGenerator {
 
-    public static CategoryData getCategoryData() {
+    public static CategoryData getData() {
         CategoryData data = new CategoryData();
         data.setId(1L);
         data.setName("Developer");
         return data;
     }
 
-    public static Category getCategoryEntity() {
+    public static Category getEntity() {
         Category data = new Category();
         data.setId(1L);
         data.setName("Developer");

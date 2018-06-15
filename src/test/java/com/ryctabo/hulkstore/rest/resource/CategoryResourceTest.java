@@ -2,7 +2,9 @@ package com.ryctabo.hulkstore.rest.resource;
 
 import com.ryctabo.hulkstore.config.SpringTestConfig;
 import com.ryctabo.hulkstore.core.domain.CategoryData;
+import com.ryctabo.hulkstore.generator.CategoryGenerator;
 import com.ryctabo.hulkstore.service.CategoryService;
+import org.glassfish.jersey.uri.internal.JerseyUriBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
@@ -27,7 +33,7 @@ public class CategoryResourceTest {
 
     private CategoryResource resource;
 
-    private CategoryData data = new CategoryData();
+    private CategoryData data = CategoryGenerator.getData();
 
     @Autowired
     public void setService(CategoryService service) {
@@ -60,8 +66,13 @@ public class CategoryResourceTest {
 
     @Test
     public void testPost() {
-        CategoryData result = this.resource.post(this.data);
-        assertSame(this.data, result);
+        UriInfo uriInfo = mock(UriInfo.class);
+        when(uriInfo.getAbsolutePathBuilder()).thenReturn(new JerseyUriBuilder());
+        Response response = this.resource.post(this.data, uriInfo);
+
+        assertNotNull(response);
+
+        assertEquals(201, response.getStatus());
     }
 
     @Test

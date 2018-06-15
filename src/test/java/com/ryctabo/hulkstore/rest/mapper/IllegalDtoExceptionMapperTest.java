@@ -22,38 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.database.repository;
+package com.ryctabo.hulkstore.rest.mapper;
 
-import com.ryctabo.hulkstore.database.entity.Category;
-import com.ryctabo.hulkstore.generator.CategoryGenerator;
+import com.ryctabo.hulkstore.service.exception.IllegalDtoException;
+import org.junit.Test;
 
-import java.util.Collections;
-import java.util.List;
+import javax.ws.rs.core.Response;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-public class CategoryRepositoryStub implements CategoryDao {
+public class IllegalDtoExceptionMapperTest {
 
-    @Override
-    public List<Category> find() {
-        return Collections.emptyList();
+    @Test
+    public void testToResponse() {
+        IllegalDtoExceptionMapper mapper = new IllegalDtoExceptionMapper();
+        Response response = mapper.toResponse(new IllegalDtoException());
+
+        assertNotNull(response);
+        assertEquals(400, response.getStatus());
     }
 
-    @Override
-    public Category find(Long id) {
-        return CategoryGenerator.getEntity();
-    }
+    @Test
+    public void testToResponseWithMessage() {
+        IllegalDtoExceptionMapper mapper = new IllegalDtoExceptionMapper();
+        Response response = mapper.toResponse(new IllegalDtoException("A message!"));
 
-    @Override
-    public Category save(Category entity) {
-        return entity;
+        assertNotNull(response);
+        assertEquals(400, response.getStatus());
     }
-
-    @Override
-    public Category delete(Long id) {
-        return CategoryGenerator.getEntity();
-    }
-
 }

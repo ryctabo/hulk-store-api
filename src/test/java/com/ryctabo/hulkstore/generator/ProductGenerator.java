@@ -22,38 +22,43 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.database.repository;
+package com.ryctabo.hulkstore.generator;
 
-import com.ryctabo.hulkstore.database.entity.Category;
-import com.ryctabo.hulkstore.generator.CategoryGenerator;
+import com.ryctabo.hulkstore.core.domain.ProductData;
+import com.ryctabo.hulkstore.database.entity.Product;
 
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-public class CategoryRepositoryStub implements CategoryDao {
+public class ProductGenerator {
 
-    @Override
-    public List<Category> find() {
-        return Collections.emptyList();
+    public static Product getEntity() {
+        Product product = new Product();
+
+        product.setId(1L);
+        product.setName("Product 1");
+        product.setPrice(100f);
+        product.setCategory(CategoryGenerator.getEntity());
+        product.setCreated(LocalDateTime.now());
+        product.setUpdated(LocalDateTime.now());
+
+        return product;
     }
 
-    @Override
-    public Category find(Long id) {
-        return CategoryGenerator.getEntity();
-    }
+    public static ProductData getData() {
+        ProductData product = new ProductData();
 
-    @Override
-    public Category save(Category entity) {
-        return entity;
-    }
+        product.setId(1L);
+        product.setName("Product 1");
+        product.setPrice(100f);
+        product.setCategory(CategoryGenerator.getData());
+        product.setCreated(LocalDateTime.now());
+        product.setUpdated(LocalDateTime.now());
 
-    @Override
-    public Category delete(Long id) {
-        return CategoryGenerator.getEntity();
+        return product;
     }
 
 }

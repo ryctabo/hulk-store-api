@@ -42,6 +42,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -64,7 +65,15 @@ public class CategoryServiceTest {
 
     @Before
     public void setUp() {
-        this.service = new CategoryServiceImpl(repository, new CategoryConverter());
+        CategoryConverter categoryConverter = mock(CategoryConverter.class);
+
+        when(categoryConverter.convertToDto(any()))
+                .thenReturn(CategoryGenerator.getData());
+
+        when(categoryConverter.convertToEntity(any()))
+                .thenReturn(CategoryGenerator.getEntity());
+
+        this.service = new CategoryServiceImpl(repository, categoryConverter);
     }
 
     @Test
@@ -98,7 +107,7 @@ public class CategoryServiceTest {
 
     @Test
     public void testAdd() {
-        CategoryData category = CategoryGenerator.getCategoryData();
+        CategoryData category = CategoryGenerator.getData();
         CategoryData response = this.service.add(category);
 
         assertNotNull(response);
@@ -113,7 +122,7 @@ public class CategoryServiceTest {
 
     @Test
     public void testUpdate() {
-        CategoryData category = CategoryGenerator.getCategoryData();
+        CategoryData category = CategoryGenerator.getData();
         CategoryData response = this.service.update(1L, category);
 
         assertNotNull(response);

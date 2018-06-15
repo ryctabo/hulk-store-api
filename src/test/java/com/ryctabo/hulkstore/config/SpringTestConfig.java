@@ -26,8 +26,12 @@ package com.ryctabo.hulkstore.config;
 
 import com.ryctabo.hulkstore.database.repository.CategoryDao;
 import com.ryctabo.hulkstore.database.repository.CategoryRepositoryStub;
+import com.ryctabo.hulkstore.database.repository.ProductDao;
+import com.ryctabo.hulkstore.database.repository.ProductRepositoryStub;
 import com.ryctabo.hulkstore.service.CategoryService;
 import com.ryctabo.hulkstore.service.CategoryServiceStub;
+import com.ryctabo.hulkstore.service.ProductService;
+import com.ryctabo.hulkstore.service.ProductServiceStub;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,6 +50,16 @@ public class SpringTestConfig {
     @Bean
     public CategoryService getCategoryService() {
         return new CategoryServiceStub();
+    }
+
+    @Bean
+    public ProductDao getProductRepository() {
+        return new ProductRepositoryStub();
+    }
+
+    @Bean
+    public ProductService getProductService() {
+        return new ProductServiceStub();
     }
 
 }
