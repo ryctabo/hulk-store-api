@@ -40,7 +40,7 @@ import java.util.List;
  * @version 1.0-SNAPSHOT
  */
 @Controller
-@Path("category")
+@Path("categories")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Scope(WebApplicationContext.SCOPE_REQUEST)
