@@ -22,55 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.database.entity;
+package com.ryctabo.hulkstore.core.domain;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.ryctabo.hulkstore.database.entity.StockType;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Entity
-@Table(name = "STOCK")
-public class Stock implements Serializable {
+@XmlRootElement
+public class StockData {
 
-    @EmbeddedId
-    private StockPK id;
+    private Integer index;
 
-    @MapsId("productId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
-    private Product product;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "TYPE", nullable = false)
     private StockType type;
 
-    @Column(name = "AMOUNT", nullable = false)
-    private int amount;
+    private Integer amount;
 
-    @Column(name = "MESSAGE", columnDefinition = "TEXT", nullable = false)
     private String message;
 
-    @Column(name = "CREATED", updatable = false, nullable = false)
     private LocalDateTime created;
 
-    public StockPK getId() {
-        return id;
+    public Integer getIndex() {
+        return index;
     }
 
-    public void setId(StockPK id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public StockType getType() {
@@ -81,11 +62,11 @@ public class Stock implements Serializable {
         this.type = type;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
