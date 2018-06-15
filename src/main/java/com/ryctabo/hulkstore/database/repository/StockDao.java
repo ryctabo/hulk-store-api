@@ -24,7 +24,6 @@
 
 package com.ryctabo.hulkstore.database.repository;
 
-import com.ryctabo.hulkstore.core.share.OrderType;
 import com.ryctabo.hulkstore.database.DataAccessObject;
 import com.ryctabo.hulkstore.database.entity.Stock;
 import com.ryctabo.hulkstore.database.entity.StockPK;
