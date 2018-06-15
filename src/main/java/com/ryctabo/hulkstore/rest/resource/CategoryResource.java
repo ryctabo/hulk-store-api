@@ -32,7 +32,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -59,8 +63,13 @@ public class CategoryResource {
     }
 
     @POST
-    public CategoryData post(CategoryData data) {
-        return this.service.add(data);
+    public Response post(CategoryData data, @Context UriInfo uriInfo) {
+        CategoryData category = this.service.add(data);
+        String newID = category.getId().toString();
+        URI location = uriInfo.getAbsolutePathBuilder().path(newID).build();
+        return Response.created(location)
+                .entity(category)
+                .build();
     }
 
     @GET
