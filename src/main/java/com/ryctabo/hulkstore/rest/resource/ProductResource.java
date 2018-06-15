@@ -54,6 +54,9 @@ public class ProductResource {
 
     private final ProductService service;
 
+    @Context
+    private ResourceContext context;
+
     @Inject
     public ProductResource(ProductService service) {
         this.service = service;
@@ -91,9 +94,11 @@ public class ProductResource {
         return this.service.update(id, data);
     }
 
-    @Path("{productId}/stocks")
-    public StockResource getStockResource(@Context ResourceContext resourceContext) {
-        return resourceContext.getResource(StockResource.class);
+    @Path("{id}/stocks")
+    public StockResource getStockResource(@PathParam("id") Long id) {
+        StockResource stockResource = this.context.getResource(StockResource.class);
+        stockResource.setProductId(id);
+        return stockResource;
     }
 
 }

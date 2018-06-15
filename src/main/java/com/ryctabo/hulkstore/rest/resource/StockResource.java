@@ -52,8 +52,11 @@ public class StockResource {
 
     private StockService service;
 
-    @PathParam("productId")
     private long productId;
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
 
     @Inject
     public void setService(StockService service) {
@@ -61,7 +64,7 @@ public class StockResource {
     }
 
     @GET
-    public ListResponse<StockData> get(StockBean bean) {
+    public ListResponse<StockData> get(@BeanParam StockBean bean) {
         return this.service.get(productId, bean.getType(), bean.getStart(), bean.getSize());
     }
 
@@ -76,7 +79,8 @@ public class StockResource {
     }
 
     @GET
-    public StockData get(Integer index) {
+    @Path("{index}")
+    public StockData get(@PathParam("index") Integer index) {
         return this.service.get(this.productId, index);
     }
 
