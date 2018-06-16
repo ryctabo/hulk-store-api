@@ -22,20 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest;
+package com.ryctabo.hulkstore.rest.filter;
 
-import org.glassfish.jersey.server.ResourceConfig;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
 
 /**
+ * The <strong>AccessControlFilter</strong> class filters all responses
+ * of the HTTP requests to add header params to access control.
+ *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
- * @version 1.0-SNAPSHOT
+ * @version 1.0
  */
-public class ConfigApp extends ResourceConfig {
+@Provider
+public class AccessControlFilter implements ContainerResponseFilter {
 
-    public ConfigApp() {
-        packages("com.ryctabo.hulkstore.rest.resource");
-        packages("com.ryctabo.hulkstore.rest.mapper");
-        packages("com.ryctabo.hulkstore.rest.filter");
+    /**
+     * This method filters the HTTP responses to add headers by CORS Filter.
+     *
+     * @param request  the request context
+     * @param response the response context
+     */
+    @Override
+    public void filter(ContainerRequestContext request, ContainerResponseContext response) {
+        response.getHeaders().add("Access-Control-Allow-Origin", "*");
+        response.getHeaders().add("Access-Control-Allow-Headers",
+                "Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        response.getHeaders().add("Access-Control-Expose-Headers", "Access-Control-*");
+        response.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     }
 
 }
