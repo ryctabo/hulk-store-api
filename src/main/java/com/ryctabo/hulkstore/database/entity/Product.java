@@ -66,6 +66,18 @@ public class Product implements Serializable {
         this.stocks = new HashSet<>();
     }
 
+    public Product(long id) {
+        this.id = id;
+    }
+
+    public Product(String name, float price, Category category, LocalDateTime created) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.created = created;
+        this.stocks = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }

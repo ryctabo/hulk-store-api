@@ -25,13 +25,16 @@
 package com.ryctabo.hulkstore.database;
 
 import com.ryctabo.hulkstore.database.entity.Category;
+import com.ryctabo.hulkstore.database.entity.Product;
 import com.ryctabo.hulkstore.database.repository.CategoryDao;
+import com.ryctabo.hulkstore.database.repository.ProductDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 
 /**
  * @author Gustavo Pacheco (ryctabo at gmail.com)
@@ -51,14 +54,21 @@ public class DataBaseInitializer {
     private final CategoryDao categoryDao;
 
     /**
+     * An instance of {@link ProductDao}.
+     */
+    private final ProductDao productDao;
+
+    /**
      * Create a new instance of {@link DataBaseInitializer} with the following
      * parameters.
      *
      * @param categoryDao category repository
+     * @param productDao  product repository
      */
     @Inject
-    public DataBaseInitializer(CategoryDao categoryDao) {
+    public DataBaseInitializer(CategoryDao categoryDao, ProductDao productDao) {
         this.categoryDao = categoryDao;
+        this.productDao = productDao;
     }
 
     /**
@@ -69,7 +79,86 @@ public class DataBaseInitializer {
     public void setUp() {
         LOG.info("Initializing the main data in the database...");
         this.createDefaultCategories();
+        this.createProducts();
         LOG.info("The main data of the database has been created.");
+    }
+
+    /**
+     * This method create the products in the database.
+     */
+    private void createProducts() {
+        this.productDao.save(new Product("Marvel Sweater",
+                25f,
+                new Category(2),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Marvel Sweater Limited Edition",
+                41f,
+                new Category(2),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("DC Sweater",
+                25f,
+                new Category(1),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("DC Sweater Limited Edition",
+                31f,
+                new Category(1),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Marvel Short",
+                38f,
+                new Category(2),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Marvel Short Limited Edition",
+                45f,
+                new Category(2),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("DC Short",
+                35f,
+                new Category(1),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("DC Short Limited Edition",
+                45f,
+                new Category(1),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Marvel Coffee Cup",
+                13f,
+                new Category(2),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Marvel Coffee Cup Limited Edition",
+                16f,
+                new Category(2),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("DC Coffee Cup",
+                12f,
+                new Category(1),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("DC Coffee Cup Limited Edition",
+                15f,
+                new Category(1),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Custom Coffee Cup",
+                10f,
+                new Category(3),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Custom Coffee Cup Limited Edition",
+                11f,
+                new Category(3),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Fortnite Coffee Cup",
+                12f,
+                new Category(3),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Fortnite Coffee Cup Limited Edition",
+                15f,
+                new Category(3),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Fortnite Sweater",
+                28f,
+                new Category(3),
+                LocalDateTime.now()));
+        this.productDao.save(new Product("Fortnite Sweater Limited Edition",
+                32f,
+                new Category(3),
+                LocalDateTime.now()));
     }
 
     /**
