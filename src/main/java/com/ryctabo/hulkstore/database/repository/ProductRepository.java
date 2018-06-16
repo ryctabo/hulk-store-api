@@ -50,7 +50,8 @@ public class ProductRepository extends AbstractRepository<Product, Long> impleme
         List<Predicate> predicates = new ArrayList<>();
 
         if (search != null)
-            predicates.add(cb.equal(product.get("name"), "%" + search + "%"));
+            predicates.add(cb.like(product.get("name"), "%" + search + "%"));
+
         if (categoryId != null)
             predicates.add(cb.equal(product.get("category").get("id"), categoryId));
 

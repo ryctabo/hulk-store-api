@@ -44,6 +44,7 @@ public class ProductConverter implements DtoConverter<Product, ProductData, Prod
 
         product.setId(entity.getId());
         product.setName(entity.getName());
+        product.setPrice(entity.getPrice());
         product.setCategory(this.categoryConverter.convertToDto(entity.getCategory()));
         product.setCreated(entity.getCreated());
         product.setUpdated(entity.getUpdated());
