@@ -22,38 +22,50 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.database.entity;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@Entity
+@Table(name = "CATEGORY")
+public class Category implements Serializable {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Id
+    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "NAME", length = 40, nullable = false)
+    private String name;
+
+    public Category() { }
+
+    public Category(long id) {
+        this.id = id;
     }
 
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

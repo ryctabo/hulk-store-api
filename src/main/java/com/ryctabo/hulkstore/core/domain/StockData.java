@@ -22,38 +22,68 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.core.domain;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
+import com.ryctabo.hulkstore.database.entity.StockType;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@XmlRootElement
+public class StockData {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    private Integer index;
+
+    private StockType type;
+
+    private Integer amount;
+
+    private String message;
+
+    private LocalDateTime created;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public StockType getType() {
+        return type;
+    }
+
+    public void setType(StockType type) {
+        this.type = type;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
 }

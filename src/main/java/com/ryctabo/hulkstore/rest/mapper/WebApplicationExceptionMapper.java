@@ -22,38 +22,41 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.rest.mapper;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
+import com.ryctabo.hulkstore.core.domain.ErrorMessage;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * The <strong>WebApplicationExceptionMapper</strong> class provides a
+ * handler for when the {@link WebApplicationException} is throw.
  *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@Provider
+public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplicationException> {
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * Method captures the {@link WebApplicationException} and returns a
+     * response object with the data corresponding the error thrown.
      *
-     * @return String that will be returned as a text/plain response.
+     * @param exception the exception thrown
+     * @return response object
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Override
+    public Response toResponse(WebApplicationException exception) {
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.addMessage(exception.getMessage());
+        return Response.fromResponse(exception.getResponse())
+                .entity(errorMessage)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

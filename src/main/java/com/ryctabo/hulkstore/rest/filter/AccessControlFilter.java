@@ -22,38 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.rest.filter;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * The <strong>AccessControlFilter</strong> class filters all responses
+ * of the HTTP requests to add header params to access control.
  *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
- * @version 1.0-SNAPSHOT
+ * @version 1.0
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@Provider
+public class AccessControlFilter implements ContainerResponseFilter {
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * This method filters the HTTP responses to add headers by CORS Filter.
      *
-     * @return String that will be returned as a text/plain response.
+     * @param request  the request context
+     * @param response the response context
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Override
+    public void filter(ContainerRequestContext request, ContainerResponseContext response) {
+        response.getHeaders().add("Access-Control-Allow-Origin", "*");
+        response.getHeaders().add("Access-Control-Allow-Headers",
+                "Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        response.getHeaders().add("Access-Control-Expose-Headers", "Access-Control-*");
+        response.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     }
 
 }

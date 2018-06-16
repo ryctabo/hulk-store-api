@@ -22,38 +22,72 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.rest.bean;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
+import com.ryctabo.hulkstore.core.share.OrderType;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.QueryParam;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public class GenericBean {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @QueryParam("q")
+    private String search;
+
+    @QueryParam("orderBy")
+    private String orderBy;
+
+    @QueryParam("orderType")
+    private OrderType orderType;
+
+    @QueryParam("start")
+    private int start;
+
+    @DefaultValue("10")
+    @QueryParam("size")
+    private int size;
+
+    public String getSearch() {
+        return search;
     }
 
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 }

@@ -24,36 +24,64 @@
 
 package com.ryctabo.hulkstore.rest.resource;
 
+import com.ryctabo.hulkstore.core.domain.ListResponse;
+import com.ryctabo.hulkstore.core.domain.StockData;
+import com.ryctabo.hulkstore.rest.bean.StockBean;
+import com.ryctabo.hulkstore.service.StockService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
 @Controller
-@Path("myresource")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public class StockResource {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
+    private StockService service;
+
+    private long productId;
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
+    @Inject
+    public void setService(StockService service) {
+        this.service = service;
+    }
+
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    public ListResponse<StockData> get(@BeanParam StockBean bean) {
+        return this.service.get(productId, bean.getType(), bean.getStart(), bean.getSize());
+    }
+
+    @POST
+    public Response post(StockData data, @Context UriInfo uriInfo) {
+        StockData stock = this.service.add(this.productId, data);
+        String newIndex = stock.getIndex().toString();
+        URI location = uriInfo.getAbsolutePathBuilder().path(newIndex).build();
+        return Response.created(location)
+                .entity(stock)
+                .build();
+    }
+
+    @GET
+    @Path("{index}")
+    public StockData get(@PathParam("index") Integer index) {
+        return this.service.get(this.productId, index);
     }
 
 }

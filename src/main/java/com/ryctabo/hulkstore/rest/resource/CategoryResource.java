@@ -24,36 +24,70 @@
 
 package com.ryctabo.hulkstore.rest.resource;
 
+import com.ryctabo.hulkstore.core.domain.CategoryData;
+import com.ryctabo.hulkstore.service.CategoryService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.List;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
 @Controller
-@Path("myresource")
+@Path("categories")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public class CategoryResource {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
+    private final CategoryService service;
+
+    @Inject
+    public CategoryResource(CategoryService service) {
+        this.service = service;
+    }
+
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    public List<CategoryData> get() {
+        return this.service.get();
+    }
+
+    @POST
+    public Response post(CategoryData data, @Context UriInfo uriInfo) {
+        CategoryData category = this.service.add(data);
+        String newID = category.getId().toString();
+        URI location = uriInfo.getAbsolutePathBuilder().path(newID).build();
+        return Response.created(location)
+                .entity(category)
+                .build();
+    }
+
+    @GET
+    @Path("{id}")
+    public CategoryData get(@PathParam("id") Long id) {
+        return this.service.get(id);
+    }
+
+    @PUT
+    @Path("{id}")
+    public CategoryData put(@PathParam("id") Long id, CategoryData data) {
+        return this.service.update(id, data);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public CategoryData delete(@PathParam("id") Long id) {
+        return this.service.delete(id);
     }
 
 }

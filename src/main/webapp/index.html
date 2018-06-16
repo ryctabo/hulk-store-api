@@ -1,34 +1,71 @@
-<!DOCTYPE html>
-<!--
-  ~ The MIT License
-  ~
-  ~ Copyright (c) 2018 Gustavo Pacheco
-  ~
-  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
-  ~ of this software and associated documentation files (the "Software"), to deal
-  ~ in the Software without restriction, including without limitation the rights
-  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  ~ copies of the Software, and to permit persons to whom the Software is furnished
-  ~ to do so, subject to the following conditions:
-  ~
-  ~ The above copyright notice and this permission notice shall be included in
-  ~ all copies or substantial portions of the Software.
-  ~
-  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  ~ THE SOFTWARE.
-  -->
-
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hulk Store API</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #00838F;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: Roboto, sans-serif;
+            font-size: 1em;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-weight: 400;
+            font-size: 3em;
+            margin: 0;
+            color: white;
+        }
+        .content {
+            position: absolute;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            align-items: center;
+        }
+        .info {
+            margin: 0 auto;
+        }
+        .footer {
+            background-color: #F5F5F5;
+            color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            padding: 24px;
+            text-align: center;
+            font-size: .8em;
+            width: 100%;
+        }
+        .footer strong {
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-<h1>Hulk Store API</h1>
+
+<div class="content">
+    <div class="info">
+        <h1>Hulk Store API</h1>
+        <p>Jersey + Spring Framework + Java Persistence API</p>
+        <p>The strongest store in the universe.</p>
+    </div>
+</div>
+<div class="footer">
+    <span>Build with &hearts;, Version Code: <strong>v1.0.beta1</strong></span>
+</div>
+
 </body>
 </html>

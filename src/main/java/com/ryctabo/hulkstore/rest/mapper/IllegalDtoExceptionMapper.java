@@ -22,38 +22,38 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.rest.mapper;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
+import com.ryctabo.hulkstore.service.exception.IllegalDtoException;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * The <strong>IllegalDtoExceptionMapper</strong> class provides a
+ * handler for when the {@link IllegalDtoException} is throw.
  *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
- * @version 1.0-SNAPSHOT
+ * @version 1.0
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@Provider
+public class IllegalDtoExceptionMapper implements ExceptionMapper<IllegalDtoException> {
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * Method captures the {@link IllegalDtoException} and returns
+     * a response object with the data corresponding to the error thrown.
      *
-     * @return String that will be returned as a text/plain response.
+     * @param exception the illegal DTO exception
+     * @return response object
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Override
+    public Response toResponse(IllegalDtoException exception) {
+        return Response.status(Response.Status.BAD_REQUEST.getStatusCode())
+                .entity(exception.getErrorMessage())
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }

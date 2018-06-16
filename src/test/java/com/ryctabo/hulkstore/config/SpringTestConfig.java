@@ -22,38 +22,44 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.config;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import com.ryctabo.hulkstore.database.repository.CategoryDao;
+import com.ryctabo.hulkstore.database.repository.CategoryRepositoryStub;
+import com.ryctabo.hulkstore.database.repository.ProductDao;
+import com.ryctabo.hulkstore.database.repository.ProductRepositoryStub;
+import com.ryctabo.hulkstore.service.CategoryService;
+import com.ryctabo.hulkstore.service.CategoryServiceStub;
+import com.ryctabo.hulkstore.service.ProductService;
+import com.ryctabo.hulkstore.service.ProductServiceStub;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@Configuration
+public class SpringTestConfig {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Bean
+    public CategoryDao getCategoryRepository() {
+        return new CategoryRepositoryStub();
+    }
+
+    @Bean
+    public CategoryService getCategoryService() {
+        return new CategoryServiceStub();
+    }
+
+    @Bean
+    public ProductDao getProductRepository() {
+        return new ProductRepositoryStub();
+    }
+
+    @Bean
+    public ProductService getProductService() {
+        return new ProductServiceStub();
     }
 
 }

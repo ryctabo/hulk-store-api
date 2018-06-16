@@ -22,38 +22,48 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.service.converter;
 
+import com.ryctabo.hulkstore.core.domain.StockData;
+import com.ryctabo.hulkstore.database.entity.Product;
+import com.ryctabo.hulkstore.database.entity.Stock;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
+@Component
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public class StockConverter implements DtoConverter<Stock, StockData, StockData> {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Override
+    public Stock convertToEntity(StockData data) {
+        Stock stock = new Stock();
+
+        stock.setType(data.getType());
+        stock.setMessage(data.getMessage());
+        stock.setAmount(data.getAmount());
+
+        Product product = new Product();
+        stock.setProduct(product);
+
+        return stock;
+    }
+
+    @Override
+    public StockData convertToDto(Stock entity) {
+        StockData stock = new StockData();
+
+        stock.setIndex(entity.getId().getIndex());
+        stock.setAmount(entity.getAmount());
+        stock.setMessage(entity.getMessage());
+        stock.setType(entity.getType());
+        stock.setCreated(entity.getCreated());
+
+        return stock;
     }
 
 }

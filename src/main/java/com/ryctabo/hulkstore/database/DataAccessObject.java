@@ -22,38 +22,54 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.database;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * The <strong>DataAccessObject</strong> interface provides methods to give you
+ * a communication between the database and application.
  *
+ * @param <T> Entity class.
+ * @param <I> Data type of the primary key or entity's ID.
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public interface DataAccessObject<T extends Serializable, I> {
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * This method returns a list of entities.
      *
-     * @return String that will be returned as a text/plain response.
+     * @return entities list
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
-    }
+    List<T> find();
+
+    /**
+     * This method searches the entity that contain the given ID
+     * in the database.
+     *
+     * @param id entity's ID
+     * @return entity
+     */
+    T find(I id);
+
+    /**
+     * This method is responsible to store entities in the database and
+     * match the persistence context.
+     *
+     * @param entity object to save
+     * @return saved entity
+     */
+    T save(T entity);
+
+    /**
+     * This method is responsible to delete entities from the
+     * given ID.
+     *
+     * @param id entity's ID
+     * @return deleted entity
+     */
+    T delete(I id);
 
 }

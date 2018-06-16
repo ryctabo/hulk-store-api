@@ -22,38 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.service.converter;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import java.io.Serializable;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * The <strong>DtoConverter</strong> interface contains all methods
+ * to convert the entities to data transfer objects and vice versa.
  *
+ * @param <E>  the entity class
+ * @param <RQ> the data transfer object to request
+ * @param <RS> the data transfer object to respond
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public interface DtoConverter<E extends Serializable, RQ, RS> {
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * Convert the data transfer object of the request to an entity.
      *
-     * @return String that will be returned as a text/plain response.
+     * @param data the data transfer object
+     * @return entity
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
-    }
+    E convertToEntity(RQ data);
+
+    /**
+     * Convert the entity to a data transfer object of the respond.
+     *
+     * @param entity the entity
+     * @return data transfer object
+     */
+    RS convertToDto(E entity);
 
 }

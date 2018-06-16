@@ -22,38 +22,61 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.core.domain;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * The <strong>ListResponse</strong> class has the functionality of
+ * standardizing the responses of a request where a list of elements
+ * has to be answered.
  *
+ * @param <T> Data type of the list
  * @author Gustavo Pacheco (ryctabo at gmail.com)
- * @version 1.0-SNAPSHOT
+ * @version 1.0
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+@XmlRootElement
+public class ListResponse<T> {
+
+    private List<T> items;
+
+    private long total;
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
+     * Create a new instance of {@link ListResponse}.
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    public ListResponse() { }
+
+    /**
+     * Create a new instance of {@link ListResponse} from the
+     * given parameters.
+     *
+     * @param items element list
+     * @param total total elements
+     */
+    public ListResponse(List<T> items, long total) {
+        this.items = items;
+        this.total = total;
+    }
+
+    @XmlElement
+    public List<T> getItems() {
+        return items;
+    }
+
+    public void setItems(List<T> items) {
+        this.items = items;
+    }
+
+    @XmlElement
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
     }
 
 }

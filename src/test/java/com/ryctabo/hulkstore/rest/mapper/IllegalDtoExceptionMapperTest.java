@@ -22,38 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.ryctabo.hulkstore.rest.resource;
+package com.ryctabo.hulkstore.rest.mapper;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
+import com.ryctabo.hulkstore.service.exception.IllegalDtoException;
+import org.junit.Test;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import static org.junit.Assert.*;
 
 /**
- * Root resource (exposed at "myresource" path)
- *
  * @author Gustavo Pacheco (ryctabo at gmail.com)
  * @version 1.0-SNAPSHOT
  */
-@Controller
-@Path("myresource")
-@Scope(WebApplicationContext.SCOPE_REQUEST)
-public class MyResource {
+public class IllegalDtoExceptionMapperTest {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Test
+    public void testToResponse() {
+        IllegalDtoExceptionMapper mapper = new IllegalDtoExceptionMapper();
+        Response response = mapper.toResponse(new IllegalDtoException());
+
+        assertNotNull(response);
+        assertEquals(400, response.getStatus());
     }
 
+    @Test
+    public void testToResponseWithMessage() {
+        IllegalDtoExceptionMapper mapper = new IllegalDtoExceptionMapper();
+        Response response = mapper.toResponse(new IllegalDtoException("A message!"));
+
+        assertNotNull(response);
+        assertEquals(400, response.getStatus());
+    }
 }
