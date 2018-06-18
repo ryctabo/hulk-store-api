@@ -24,10 +24,10 @@
 
 package com.ryctabo.hulkstore.database;
 
-import com.ryctabo.hulkstore.database.entity.Category;
-import com.ryctabo.hulkstore.database.entity.Product;
+import com.ryctabo.hulkstore.database.entity.*;
 import com.ryctabo.hulkstore.database.repository.CategoryDao;
 import com.ryctabo.hulkstore.database.repository.ProductDao;
+import jersey.repackaged.com.google.common.collect.Sets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -87,10 +87,30 @@ public class DataBaseInitializer {
      * This method create the products in the database.
      */
     private void createProducts() {
-        this.productDao.save(new Product("Marvel Sweater",
-                25f,
+        Product product = new Product("Marvel Sweater",
+                31f,
                 new Category(2),
-                LocalDateTime.now()));
+                LocalDateTime.now());
+
+        Stock stock1 = new Stock();
+        stock1.setId(new StockPK(1));
+        stock1.setProduct(product);
+        stock1.setAmount(100);
+        stock1.setType(StockType.INPUT);
+        stock1.setMessage("Purchase items for inventory.");
+        stock1.setCreated(LocalDateTime.now());
+
+        Stock stock2 = new Stock();
+        stock2.setId(new StockPK(2));
+        stock2.setProduct(product);
+        stock2.setAmount(24);
+        stock2.setType(StockType.OUTPUT);
+        stock2.setMessage("Sell of articles.");
+        stock2.setCreated(LocalDateTime.now());
+
+        product.setStocks(Sets.newHashSet(stock1, stock2));
+        this.productDao.save(product);
+
         this.productDao.save(new Product("Marvel Sweater Limited Edition",
                 41f,
                 new Category(2),

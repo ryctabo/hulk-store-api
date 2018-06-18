@@ -43,6 +43,7 @@ import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,6 +97,7 @@ public class StockServiceImpl implements StockService {
                 .find(productId, type, start, size)
                 .stream()
                 .map(this.converter::convertToDto)
+                .sorted(Comparator.comparingInt(StockData::getIndex))
                 .collect(Collectors.toList());
         long total = this.stockDao.count(productId, type);
         return new ListResponse<>(items, total);
